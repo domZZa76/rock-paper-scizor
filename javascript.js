@@ -1,5 +1,11 @@
-let computerChoice = ''
-let humanChoice = ''
+let computerChoice;
+let humanChoice;
+
+// SCORES
+
+let humacScore = 0;
+let computerScore = 0;
+
 
 //COMPUTER CHOICE
 
@@ -20,12 +26,7 @@ function getHumanChoice() {
     humanChoice = prompt('Rock, Paper or Scizors').toLowerCase()
 }
 
-// SCORES
-
-let humacScore = 0;
-let computerScore = 0
-
-// SINGLE ROUND
+// PLAY ROUND
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === 'rock' && computerChoice === 'scizors' ||
@@ -33,21 +34,49 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === 'scizors' && computerChoice === 'paper'
     ) {
         humacScore++
+        console.log('Computer chose ' + computerChoice);
         console.log('You Win!')
     } else if (humanChoice === 'rock' && computerChoice === 'paper' ||
         humanChoice === 'paper' && computerChoice === 'scizors' ||
         humanChoice === 'scizors' && computerChoice === 'rock') {
         computerScore++
+        console.log('Computer chose ' + computerChoice);
+
         console.log('You Lose!')
     } else {
+        console.log('Computer chose ' + computerChoice);
         console.log('DRAW!')
     }
 }
 
-getHumanChoice()
-console.log(humanChoice)
+//PLAY GAME
 
-getComputorChoice()
-console.log(computerChoice)
+function playGame() {
+    while(humacScore < 3 && computerScore < 3) {
+    //for (let i = 0; i < 5; i++) {
+        getHumanChoice();
+        getComputorChoice();
 
-playRound(humanChoice, computerChoice)
+        playRound(humanChoice, computerChoice)
+        console.log('You = ' + humacScore);
+        console.log('Computer = ' + computerScore)
+
+        if (computerScore === 3) {
+            console.log('YYYYOOOOUUUUUUUU SUUUUUCK!')
+        } else if (humacScore === 3) {
+            console.log('YYYYOOOOUUUUUUUU WWIIIIIN!')
+        }
+    }
+}
+
+playGame()
+
+// getHumanChoice()
+//console.log(humanChoice)
+
+// getComputorChoice()
+//console.log(computerChoice)
+
+
+
+
