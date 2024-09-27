@@ -1,11 +1,12 @@
+const body = document.querySelector('body')
+
 let computerChoice;
 let humanChoice;
 
 // SCORES
 
-let humacScore = 0;
-let computerScore = 0;
-
+let humanScore = document.querySelector('#human-score');
+let computerScore = document.querySelector('#computer-score');
 
 //COMPUTER CHOICE
 
@@ -20,12 +21,6 @@ function getComputorChoice() {
     ]
 }
 
-//HUMAN CHOICE
-
-function getHumanChoice() {
-    humanChoice = prompt('Rock, Paper or Scizors').toLowerCase()
-}
-
 // PLAY ROUND
 
 function playRound(humanChoice, computerChoice) {
@@ -33,15 +28,14 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === 'paper' && computerChoice === 'rock' ||
         humanChoice === 'scizors' && computerChoice === 'paper'
     ) {
-        humacScore++
+        humanScore.textContent++
         console.log('Computer chose ' + computerChoice);
         console.log('You Win!')
     } else if (humanChoice === 'rock' && computerChoice === 'paper' ||
         humanChoice === 'paper' && computerChoice === 'scizors' ||
         humanChoice === 'scizors' && computerChoice === 'rock') {
-        computerScore++
+        computerScore.textContent++
         console.log('Computer chose ' + computerChoice);
-
         console.log('You Lose!')
     } else {
         console.log('Computer chose ' + computerChoice);
@@ -49,34 +43,34 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-//PLAY GAME
+//HUMAN CHOICE AND PLAYING THE GAME
 
-function playGame() {
-    while(humacScore < 3 && computerScore < 3) {
-    //for (let i = 0; i < 5; i++) {
-        getHumanChoice();
-        getComputorChoice();
-
-        playRound(humanChoice, computerChoice)
-        console.log('You = ' + humacScore);
-        console.log('Computer = ' + computerScore)
-
-        if (computerScore === 3) {
-            console.log('YYYYOOOOUUUUUUUU SUUUUUCK!')
-        } else if (humacScore === 3) {
-            console.log('YYYYOOOOUUUUUUUU WWIIIIIN!')
+let winner
+let btns = document.querySelectorAll('button');
+btns.forEach((button) => {
+    button.addEventListener(('click'), () => {
+        if (humanScore.textContent < 3 && computerScore.textContent < 3) {
+            getComputorChoice()
+            humanChoice = button.value;
+            playRound(humanChoice, computerChoice)
+            body.appendChild(humanScore)
+            body.appendChild(computerScore)
         }
-    }
-}
-
-playGame()
-
-// getHumanChoice()
-//console.log(humanChoice)
-
-// getComputorChoice()
-//console.log(computerChoice)
-
-
+        if (humanScore.textContent == 3) {
+            winner = document.createElement('h1');
+            winner.textContent = 'YOU WIN';
+            body.appendChild(winner)
+        } else if (computerScore.textContent == 3) {
+            winner = document.createElement('h1');
+            winner.textContent = 'YOU LOSE';
+            body.appendChild(winner)
+        }
+        if (humanScore.textContent == 3 || computerScore.textContent == 3) {
+            humanScore.textContent = 0;
+            computerScore.textContent = 0;
+        }
+    
+    })
+})
 
 
